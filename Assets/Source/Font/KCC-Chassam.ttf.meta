@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 9c2a1c7efb30c8b41a39ec9de6dda39b
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - KCC-Chassam
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 2cdb0601a17a1354eaefad111ac41c06, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
