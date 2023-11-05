@@ -19,10 +19,9 @@ public class BackGroundMove : MonoBehaviour
     private void Update()
     {
         // 배경 화면 스크롤
-        pos += (Time.deltaTime * moveSpeed) * -1;
+        pos += Time.deltaTime * moveSpeed;
 
         mesh.material.mainTextureOffset = new Vector2(pos, 0);
-        
     }
 
 }
