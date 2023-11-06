@@ -250,6 +250,7 @@ public class MenuManager : MonoBehaviour
                 CutScene();
                 break;
             case 1:
+                SceneChangeDoor.Instance.PlayCloseAnimation("ChapterOne");
                 break;
             case 2:
                 break;
