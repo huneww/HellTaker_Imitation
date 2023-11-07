@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 121061062037889576}
   - component: {fileID: 1307855934980330296}
   - component: {fileID: 4976872687456156069}
+  - component: {fileID: 6011420322163470124}
   m_Layer: 5
   m_Name: SceneLoadCanvas
   m_TagString: Untagged
@@ -62,7 +63,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1000
   m_TargetDisplay: 0
 --- !u!114 &121061062037889576
 MonoBehaviour:
@@ -116,6 +117,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfbbffe410ca9314d8238ae30cfa5569, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6011420322163470124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1319847307450580935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 451d5b482522f994888a5a03542a20c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 7150447136152790981}
+  door: {fileID: 6485105154091046089}
 --- !u!1 &6485105154091046089
 GameObject:
   m_ObjectHideFlags: 0
@@ -129,14 +144,14 @@ GameObject:
   - component: {fileID: 6353472946020409096}
   - component: {fileID: 7150447136152790981}
   - component: {fileID: 5091390446834440221}
-  - component: {fileID: 5873935247007219353}
+  - component: {fileID: 2781907900584862519}
   m_Layer: 5
   m_Name: ChangeDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &693084715779172603
 RectTransform:
   m_ObjectHideFlags: 0
@@ -312,7 +327,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &5873935247007219353
+--- !u!114 &2781907900584862519
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -321,8 +336,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 6485105154091046089}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 451d5b482522f994888a5a03542a20c2, type: 3}
+  m_Script: {fileID: 11500000, guid: ce2dc3c1ca43cf84795f77828ccd1413, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openSound: {fileID: 8300000, guid: 29eb91c5940027341a093b73c0b1ac52, type: 3}
   closeSound: {fileID: 8300000, guid: 3bb2389f3b513ff43a7cbaf6346bf105, type: 3}
+  openSound: {fileID: 8300000, guid: 29eb91c5940027341a093b73c0b1ac52, type: 3}
