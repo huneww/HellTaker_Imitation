@@ -934,6 +934,7 @@ GameObject:
   - component: {fileID: 1380551188}
   - component: {fileID: 1380551187}
   - component: {fileID: 1380551189}
+  - component: {fileID: 1380551190}
   m_Layer: 5
   m_Name: CutScene
   m_TagString: Untagged
@@ -1014,6 +1015,85 @@ MonoBehaviour:
   sprites:
   - {fileID: 21300000, guid: 066e20c24d21aff42ae3de07aa909e04, type: 3}
   - {fileID: 21300000, guid: 344a7ed10437ed94793ecdb43d53ee5d, type: 3}
+--- !u!114 &1380551190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1380551185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0874be49bba9d354e9f07ca1c53235e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  xCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.8999348
+      inSlope: 0.59931004
+      outSlope: 0.59931004
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.50005174
+      value: 1.1996208
+      inSlope: 0.100013524
+      outSlope: 0.100013524
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: -0.399283
+      outSlope: -0.399283
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  yCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.8999348
+      inSlope: 0.59931004
+      outSlope: 0.59931004
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.50005174
+      value: 1.1996208
+      inSlope: 0.100013524
+      outSlope: 0.100013524
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: -0.399283
+      outSlope: -0.399283
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  time: 0.5
 --- !u!114 &1380664000 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5965059982282424087, guid: cd0ec57260b7ce8469cf4ad2fce9aafd, type: 3}

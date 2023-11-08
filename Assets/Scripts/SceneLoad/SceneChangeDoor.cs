@@ -47,6 +47,13 @@ public class SceneChangeDoor : MonoBehaviour
     public void PlayOpenAnimation()
     {
         animator.SetTrigger(openHash);
+        StartCoroutine(DoorDisable());
+    }
+
+    private IEnumerator DoorDisable()
+    {
+        yield return new WaitForSeconds(3f);
+        door.SetActive(false);
     }
 
     /// <summary>

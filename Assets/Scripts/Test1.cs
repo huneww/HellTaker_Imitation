@@ -1,18 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class Test1 : MonoBehaviour
 {
-    public GameObject test;
-
-    void Update()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (collision.transform.CompareTag("Goal"))
         {
-            Debug.Log(test.activeSelf);
-            test.SetActive(!test.activeSelf);
-            Debug.Log(test.activeSelf);
+            Debug.Log("OnTriggerEnter2D");
         }
     }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision != null)
+        {
+            Debug.Log("OnTriggerStay2D");
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision != null)
+        {
+            Debug.Log("OnTriggerExit2D");
+        }
+    }
+
 }

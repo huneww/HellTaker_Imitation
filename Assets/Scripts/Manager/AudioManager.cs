@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
+
     // 싱글톤 패턴
     private static AudioManager instance;
     public static AudioManager Instance
@@ -43,9 +44,21 @@ public class AudioManager : MonoBehaviour
     // 스톤 이동 사운드
     [SerializeField]
     private AudioClip[] stonMoveSound;
-    // 다이얼로그에서 잘못선택시 나오는 사운드
+    // 다이얼로그 출력 사운드
+    [SerializeField]
+    private AudioClip dialogComFirmSound;
+    // 다이얼로그에서 실패시 나오는 사운드
     [SerializeField]
     private AudioClip badEnd;
+    // 다이얼로그에서 성공시 나오는 사운드
+    [SerializeField]
+    private AudioClip goodEnd;
+    // 다이얼로그 선택 메뉴 이동 사운드
+    [SerializeField]
+    private AudioClip dialogMoveSound;
+    // 다이얼로그 선택 메뉴 결정 사운드
+    [SerializeField]
+    private AudioClip dialogSelectSound;
 
     private void Awake()
     {
@@ -55,46 +68,69 @@ public class AudioManager : MonoBehaviour
             Destroy(this.gameObject);
     }
 
+    private void IndexChange()
+    {
+        audioIndex = (audioIndex + 1) % subAudios.Length;
+    }
+
+    private void AudioPlay(AudioClip clip)
+    {
+        subAudios[audioIndex].PlayOneShot(clip);
+    }
+
     public void PlayerMove()
     {
-        subAudios[audioIndex].PlayOneShot(playerMove);
-        audioIndex = (audioIndex + 1) % subAudios.Length;
+        AudioPlay(playerMove);
     }
 
     public void PlayerDead()
     {
-        subAudios[audioIndex].PlayOneShot(playerDead);
-        audioIndex = (audioIndex + 1) % subAudios.Length;
+        AudioPlay(playerDead);
     }
 
     public void EnemyKick()
     {
-        subAudios[audioIndex].PlayOneShot(enemyKickSound[Random.Range(0, enemyKickSound.Length)]);
-        audioIndex = (audioIndex + 1) % subAudios.Length;
+        AudioPlay(enemyKickSound[Random.Range(0, enemyKickSound.Length)]);
     }
 
     public void EnemyDie()
     {
-        subAudios[audioIndex].PlayOneShot(enemyDieSound[Random.Range(0, enemyDieSound.Length)]);
-        audioIndex = (audioIndex + 1) % subAudios.Length;
+        AudioPlay(enemyDieSound[Random.Range(0, enemyDieSound.Length)]);
     }
 
     public void StoneKick()
     {
-        subAudios[audioIndex].PlayOneShot(stonKickSound[Random.Range(0, stonKickSound.Length)]);
-        audioIndex = (audioIndex + 1) % subAudios.Length;
+        AudioPlay(stonKickSound[Random.Range(0, stonKickSound.Length)]);
     }
 
     public void StoneMove()
     {
-        subAudios[audioIndex].PlayOneShot(stonMoveSound[Random.Range(0, stonMoveSound.Length)]);
-        audioIndex = (audioIndex + 1) % subAudios.Length;
+        AudioPlay(stonMoveSound[Random.Range(0, stonMoveSound.Length)]);
+    }
+
+    public void DialogComFirm()
+    {
+        AudioPlay(dialogComFirmSound);
     }
 
     public void BadEnd()
     {
-        subAudios[audioIndex].PlayOneShot(badEnd);
-        audioIndex = (audioIndex + 1) % subAudios.Length;
+        AudioPlay(badEnd);
+    }
+
+    public void GoodEnd()
+    {
+        AudioPlay(goodEnd);
+    }
+
+    public void DialogMove()
+    {
+        AudioPlay(dialogMoveSound);
+    }
+
+    public void DialogSelect()
+    {
+        AudioPlay(dialogSelectSound);
     }
 
     public void MainAudioStop()

@@ -47,6 +47,9 @@ public class PlayerMove : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.Instance.IsDialog || GameManager.Instance.IsSelect)
+            return;
+
         Move();
     }
 
@@ -222,6 +225,15 @@ public class PlayerMove : MonoBehaviour
         tr.position = targetPos;
         // 이동이 가능하도록 변경
         isMove = false;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log("OnTriigerEnter");
+        if (collision.transform.CompareTag("Goal"))
+        {
+            GameManager.Instance.Goal();
+        }
     }
 
     // 이동 방향 오브젝트 체크 가시화

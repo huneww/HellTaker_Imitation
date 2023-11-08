@@ -33,7 +33,10 @@ public class CutSceneChange : MonoBehaviour
         if (curImage >= sprites.Length) throw new Exception("sprites overFloor");
         // ÄÆ¾À ÀÌ¹ÌÁö º¯°æ
         else
+        {
+            CutScenePingPong.cutScenePingPong();
             image.sprite = sprites[curImage];
+        }
         
     }
 
