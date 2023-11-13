@@ -24,8 +24,21 @@ public class SpriteMove : MonoBehaviour
         image = GetComponent<Image>();
     }
 
+    private void TextActive()
+    {
+        foreach (var text in texts)
+            text.SetActive(true);
+        booper.SetActive(true);
+    }
+
     public IEnumerator MoveCoroutine()
     {
+        if (GameManager.Instance.CurStage == 8)
+        {
+            TextActive();
+            yield break;
+        }
+
         float curTime = 0;
         float percent = 0;
         Vector3 curPos = rectTransform.localPosition;
@@ -44,9 +57,7 @@ public class SpriteMove : MonoBehaviour
         rectTransform.localPosition = targetPos;
         color.a = 255;
         image.color = color;
-        foreach (var text in texts)
-            text.SetActive(true);
-        booper.SetActive(true);
+        TextActive();
         AudioManager.Instance.DialogComFirm();
     }
 

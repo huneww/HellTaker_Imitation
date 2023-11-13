@@ -49,6 +49,23 @@ public class GameManager : MonoBehaviour
         }
     }
     private GameObject player;
+    private bool isDead;
+    public bool IsDead
+    {
+        get
+        {
+            return isDead;
+        }
+    }
+    private bool haveKey;
+    public bool HaveKey
+    {
+        get
+        {
+            return haveKey;
+        }
+    }
+    private GameObject demon;
     private int curStage;
     public int CurStage
     {
@@ -65,6 +82,12 @@ public class GameManager : MonoBehaviour
     private GameObject hit;
     [SerializeField]
     private GameObject bornParticle;
+    [SerializeField]
+    private GameObject blood;
+    [SerializeField]
+    private GameObject lovePlosion;
+    [SerializeField]
+    private GameObject unLock;
 
     [Space(10), Header("UI")]
     [SerializeField]
@@ -115,6 +138,8 @@ public class GameManager : MonoBehaviour
     }
     [SerializeField]
     private GameObject badEndScene;
+    [SerializeField]
+    private GameObject secondBadEndScene;
 
     private void Awake()
     {
@@ -127,6 +152,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        demon = GameObject.FindGameObjectWithTag("Demon");
         ChapterUITextReset();
     }
 
@@ -135,6 +161,17 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             StartCoroutine(StageChange(true, true));
+        }
+
+        if (badEndScene.activeSelf)
+        {
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                if (curStage == 8)
+                    StartCoroutine(StageChange(false));
+                else
+                    StartCoroutine(StageChange(true));
+            }
         }
     }
 
@@ -155,10 +192,18 @@ public class GameManager : MonoBehaviour
         Destroy(clone, 3.0f);
     }
 
+    public void SpawnBlood(Vector3 spawnPos)
+    {
+        Instantiate(blood, spawnPos, Quaternion.identity);
+        AudioManager.Instance.SpikeHit();
+        FootCountMinus(true);
+        StartCoroutine(PlayerColorChange());
+    }
+
     private void ChapterUITextReset()
     {
         Scene scene = SceneManager.GetActiveScene();
-        chapterText.text = scene.name;
+        Debug.Log(scene.name);
         switch (scene.name)
         {
             case "ChapterOne":
@@ -166,22 +211,22 @@ public class GameManager : MonoBehaviour
                 curFootCount = 23;
                 curStage = 0;
                 break;
-            case "ChpaterTwo":
+            case "ChapterTwo":
                 chapterText.text = "¥±";
                 curFootCount = 24;
                 curStage = 1;
                 break;
-            case "ChpaterThree":
+            case "ChapterThree":
                 chapterText.text = "¥²";
                 curFootCount = 32;
                 curStage = 2;
                 break;
-            case "ChpaterFour":
+            case "ChapterFour":
                 chapterText.text = "¥³";
                 curFootCount = 23;
                 curStage = 3;
                 break;
-            case "ChpaterFive":
+            case "ChapterFive":
                 chapterText.text = "¥´";
                 curFootCount = 23;
                 curStage = 4;
@@ -201,7 +246,7 @@ public class GameManager : MonoBehaviour
                 curFootCount = 12;
                 curStage = 7;
                 break;
-            case "ChatperNine":
+            case "ChapterNine":
                 chapterText.text = "¥¸";
                 curFootCount = 33;
                 curStage = 8;
@@ -210,11 +255,12 @@ public class GameManager : MonoBehaviour
         footCountText.text = curFootCount.ToString();
     }
 
-    public void FootCountMinus()
+    public void FootCountMinus(bool isSpike = false)
     {
-        if (curFootCount < 1)
+        if (curFootCount < 1 && !isDead)
         {
             Debug.Log("Player Dead");
+            isDead = true;
             AudioManager.Instance.PlayerDead();
             uiCanvas.SetActive(false);
             Instantiate(deadBackGround, Vector3.zero, Quaternion.identity);
@@ -223,11 +269,31 @@ public class GameManager : MonoBehaviour
             return;
         }
         curFootCount--;
+        Debug.Log("FootMinus");
         footCountText.text = curFootCount.ToString();
+        footCountText.gameObject.SetActive(false);
+        footCountText.gameObject.SetActive(true);
+
+        if (isSpike)
+        {
+            StartCoroutine(FootTextColor());
+            CameraShake.cameraShake();
+        }
+
+        if (curFootCount == 0)
+            footCountText.text = "X";
+    }
+
+    private IEnumerator FootTextColor()
+    {
+        footCountText.color = Color.red;
+        yield return new WaitForSeconds(0.1f);
+        footCountText.color = Color.white;
     }
 
     public void Goal()
     {
+        if (isDead) return;
         uiCanvas.SetActive(false);
         dialogCanvas.SetActive(true);
         isDialog = true;
@@ -237,14 +303,32 @@ public class GameManager : MonoBehaviour
     {
         dialogCanvas.SetActive(false);
         badEndScene.SetActive(true);
+        AudioManager.Instance.MainAudioStop();
+    }
+
+    public void BadSecondEnd()
+    {
+        if (secondBadEndScene == null) throw new System.Exception("Second Bad End Scene is Null");
+
+        dialogCanvas.SetActive(false);
+        secondBadEndScene.SetActive(true);
+        AudioManager.Instance.MainAudioStop();
     }
 
     public void GoodEnd()
     {
+        player.GetComponent<Animator>().SetTrigger("Clear");
+        AudioManager.Instance.SuccesSound();
+        Instantiate(lovePlosion, demon.transform.position, Quaternion.identity);
+    }
+
+    private IEnumerator DelayStageChange(float delay)
+    {
+        yield return new WaitForSeconds(delay);
         StartCoroutine(StageChange(false));
     }
 
-    private IEnumerator StageChange(bool isRestart, bool isPressR = false)
+    public IEnumerator StageChange(bool isRestart, bool isPressR = false)
     {
         Scene scene = SceneManager.GetActiveScene();
         string name = scene.name;
@@ -262,34 +346,34 @@ public class GameManager : MonoBehaviour
             switch(name)
             {
                 case "ChapterOne":
-                    SceneChangeDoor.Instance.PlayCloseAnimation("ChpaterTwo");
+                    SceneChangeDoor.Instance.PlayCloseAnimation("ChapterTwo");
                     break;
-                case "ChpaterTwo":
-                    SceneChangeDoor.Instance.PlayCloseAnimation("ChpaterThree");
+                case "ChapterTwo":
+                    SceneChangeDoor.Instance.PlayCloseAnimation("ChapterThree");
                     break;
-                case "ChpaterThree":
-                    SceneChangeDoor.Instance.PlayCloseAnimation("ChpaterFour");
+                case "ChapterThree":
+                    SceneChangeDoor.Instance.PlayCloseAnimation("ChapterFour");
                     break;
-                case "ChpaterFour":
-                    SceneChangeDoor.Instance.PlayCloseAnimation("ChpaterFive");
+                case "ChapterFour":
+                    SceneChangeDoor.Instance.PlayCloseAnimation("ChapterFive");
                     break;
-                case "ChpaterFive":
-                    SceneChangeDoor.Instance.PlayCloseAnimation("ChpaterSix");
+                case "ChapterFive":
+                    SceneChangeDoor.Instance.PlayCloseAnimation("ChapterSix");
                     break;
                 case "ChapterSix":
-                    SceneChangeDoor.Instance.PlayCloseAnimation("ChpaterSeven");
+                    SceneChangeDoor.Instance.PlayCloseAnimation("ChapterSeven");
                     break;
                 case "ChapterSeven":
-                    SceneChangeDoor.Instance.PlayCloseAnimation("ChpaterEight");
+                    SceneChangeDoor.Instance.PlayCloseAnimation("ChapterEight");
                     break;
                 case "ChapterEight":
-                    SceneChangeDoor.Instance.PlayCloseAnimation("ChpaterNine");
+                    SceneChangeDoor.Instance.PlayCloseAnimation("ChapterNine");
                     break;
-                case "ChatperNine":
-                    SceneChangeDoor.Instance.PlayCloseAnimation("ChpaterTen");
+                case "ChapterNine":
+                    SceneChangeDoor.Instance.PlayCloseAnimation("ChapterTen");
                     break;
                 case "ChapterTen":
-                    SceneChangeDoor.Instance.PlayCloseAnimation("ChpaterEX");
+                    SceneChangeDoor.Instance.PlayCloseAnimation("ChapterEX");
                     break;
                 case "ChapterEX":
                     SceneChangeDoor.Instance.PlayCloseAnimation("MainMenu");
@@ -298,6 +382,29 @@ public class GameManager : MonoBehaviour
         }
 
         yield return new WaitForSeconds(2f);
+    }
+
+    private IEnumerator PlayerColorChange()
+    {
+        player.GetComponent<SpriteRenderer>().color = Color.red;
+        yield return new WaitForSeconds(0.25f);
+        player.GetComponent<SpriteRenderer>().color = Color.white;
+    }
+
+    public void GetKey(GameObject key)
+    {
+        haveKey = true;
+        Instantiate(unLock, key.transform.position, Quaternion.identity);
+        AudioManager.Instance.GetKey();
+        Destroy(key);
+    }
+
+    public void UnLockBox(GameObject box)
+    {
+        haveKey = false;
+        Instantiate(unLock, box.transform.position, Quaternion.identity);
+        AudioManager.Instance.DoorOpen();
+        Destroy(box);
     }
 
 }

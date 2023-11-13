@@ -9,13 +9,13 @@ public class BadEndText : MonoBehaviour
     private Text text;
 
     [SerializeField, TextArea]
-    private string[] badEndText;
+    private string badEndText;
 
     private void Start()
     {
         text = GetComponent<Text>();
         Debug.Log(GameManager.Instance.CurStage);
-        text.text = badEndText[GameManager.Instance.CurStage];
+        text.text = badEndText;
         AudioManager.Instance.BadEnd();
     }
 

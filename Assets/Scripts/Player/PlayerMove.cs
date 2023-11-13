@@ -34,9 +34,6 @@ public class PlayerMove : MonoBehaviour
     private int moveHash = Animator.StringToHash("Move");
     private int kickHash = Animator.StringToHash("Kick");
 
-    // 현재 움직이는지 확인 여부
-    private bool isMove = false;
-
     private void Start()
     {
         // 각 컴포넌트 획득
@@ -47,7 +44,7 @@ public class PlayerMove : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.Instance.IsDialog || GameManager.Instance.IsSelect)
+        if (GameManager.Instance.IsDialog || GameManager.Instance.IsSelect || GameManager.Instance.IsDead)
             return;
 
         Move();
@@ -58,7 +55,7 @@ public class PlayerMove : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             // 플레이어의 오른쪽 위치를 저장
-            Vector3 checkPos = new Vector3(transform.position.x + GameManager.Instance.MoveXOffset, transform.position.y + 0.25f);
+            Vector3 checkPos = new Vector3(transform.position.x + GameManager.Instance.MoveXOffset, transform.position.y);
             // 오른쪽 위치에 오브젝트 확인
             hit = Physics2D.OverlapCircle(checkPos, circleRadius, checkLayer);
 
@@ -79,7 +76,7 @@ public class PlayerMove : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             // 플레이어의 왼쪽 위치를 저장
-            Vector3 checkPos = new Vector3(transform.position.x - GameManager.Instance.MoveXOffset, transform.position.y + 0.25f);
+            Vector3 checkPos = new Vector3(transform.position.x - GameManager.Instance.MoveXOffset, transform.position.y);
             // 왼쪽 위치에 오브젝트 확인
             hit = Physics2D.OverlapCircle(checkPos, circleRadius, checkLayer);
             // 스프라이트 반전
@@ -102,7 +99,7 @@ public class PlayerMove : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             // 플레이어의 위쪽 위치를 저장
-            Vector3 checkPos = new Vector3(transform.position.x, transform.position.y + GameManager.Instance.MoveYOffset + 0.25f);
+            Vector3 checkPos = new Vector3(transform.position.x, transform.position.y + GameManager.Instance.MoveYOffset);
             // 위쪽 위치에 오브젝트 확인
             hit = Physics2D.OverlapCircle(checkPos, circleRadius, checkLayer);
 
@@ -119,7 +116,7 @@ public class PlayerMove : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             // 플레이어 아랫쪽 위치를 저장
-            Vector3 checkPos = new Vector3(transform.position.x, transform.position.y - GameManager.Instance.MoveYOffset + 0.25f);
+            Vector3 checkPos = new Vector3(transform.position.x, transform.position.y - GameManager.Instance.MoveYOffset);
             // 아랫쪽 위치에 오브젝트 확인
             hit = Physics2D.OverlapCircle(checkPos, circleRadius, checkLayer);
 
@@ -149,16 +146,32 @@ public class PlayerMove : MonoBehaviour
         {
             ObjectMove move = hit.transform.GetComponent<ObjectMove>();
             move.Move(direction);
-            Vector3 spawnPos = hit.transform.position;
-            GameManager.Instance.SpawnHit(new Vector3(spawnPos.x, spawnPos.y + 0.25f, spawnPos.z));
+            GameManager.Instance.SpawnHit(hit.transform.position);
             // 킥 애니메이션 실행
             animator.SetTrigger(kickHash);
             // 이동 횟수 감소
             GameManager.Instance.FootCountMinus();
         }
-        // 오브젝트의 태그가 Wall이면
-        else if (hit.transform.CompareTag("Wall"))
+        // 오브젝트의 태그가 LockBox이면
+        else if (hit.transform.CompareTag("LockBox"))
         {
+            Debug.Log("Lock Box");
+            // 키를 먹은 상태
+            if (GameManager.Instance.HaveKey)
+            {
+                GameManager.Instance.UnLockBox(hit.gameObject);
+                // 방향을 매개변수로 위치 이동
+                StartCoroutine(MoveCoroutine(direction));
+            }
+            // 키를 먹지 안은 상태
+            else
+            {
+                animator.SetTrigger(kickHash);
+                AudioManager.Instance.DoorKick();
+                GameManager.Instance.FootCountMinus();
+                StartCoroutine(hit.transform.GetComponent<LockBox>().ObjectShake());
+            }
+
         }
     }
 
@@ -174,12 +187,10 @@ public class PlayerMove : MonoBehaviour
         // 이동 애니메이션 실행
         animator.SetTrigger(moveHash);
         // 현재 위치에서 y축을 조금 올려 먼지 생성
-        GameManager.Instance.SpawnDust(new Vector3(tr.position.x, tr.position.y + 0.25f, tr.position.z));
+        GameManager.Instance.SpawnDust(transform.position);
         // 이동 횟수 감소
         GameManager.Instance.FootCountMinus();
 
-        // 이동 불가로 변경
-        isMove = true;
         float curTime = 0;
         float percent = 0;
         // 현재 위치 저장
@@ -223,16 +234,17 @@ public class PlayerMove : MonoBehaviour
 
         // 플레이어 목표 위치로 변경
         tr.position = targetPos;
-        // 이동이 가능하도록 변경
-        isMove = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("OnTriigerEnter");
         if (collision.transform.CompareTag("Goal"))
         {
             GameManager.Instance.Goal();
+        }
+        else if (collision.transform.CompareTag("Key"))
+        {
+            GameManager.Instance.GetKey(collision.gameObject);
         }
     }
 
@@ -243,10 +255,10 @@ public class PlayerMove : MonoBehaviour
             return;
 
         Gizmos.color = Color.white;
-        Gizmos.DrawWireSphere(new Vector3(transform.position.x + GameManager.Instance.MoveXOffset, transform.position.y + 0.25f), circleRadius);
-        Gizmos.DrawWireSphere(new Vector3(transform.position.x - GameManager.Instance.MoveXOffset, transform.position.y + 0.25f), circleRadius);
-        Gizmos.DrawWireSphere(new Vector3(transform.position.x, transform.position.y + GameManager.Instance.MoveYOffset + 0.25f), circleRadius);
-        Gizmos.DrawWireSphere(new Vector3(transform.position.x, transform.position.y - GameManager.Instance.MoveYOffset + 0.25f), circleRadius);
+        Gizmos.DrawWireSphere(new Vector3(transform.position.x + GameManager.Instance.MoveXOffset, transform.position.y), circleRadius);
+        Gizmos.DrawWireSphere(new Vector3(transform.position.x - GameManager.Instance.MoveXOffset, transform.position.y), circleRadius);
+        Gizmos.DrawWireSphere(new Vector3(transform.position.x, transform.position.y + GameManager.Instance.MoveYOffset), circleRadius);
+        Gizmos.DrawWireSphere(new Vector3(transform.position.x, transform.position.y - GameManager.Instance.MoveYOffset), circleRadius);
     }
 
 }

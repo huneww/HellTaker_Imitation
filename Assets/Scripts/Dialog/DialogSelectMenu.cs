@@ -13,12 +13,16 @@ public class DialogSelectMenu : MonoBehaviour
     private Image[] textImages;
     [SerializeField]
     private Text[] texts;
+    [SerializeField, TextArea]
+    private string[] text_select;
     [SerializeField]
     private int curIndex;
 
     private void Start()
     {
         ChangeColor();
+        texts[0].text = text_select[0];
+        texts[1].text = text_select[1];
     }
 
     private void Update()
@@ -49,18 +53,48 @@ public class DialogSelectMenu : MonoBehaviour
 
     private void SelectMenu()
     {
-        switch (GameManager.Instance.CurStage)
+        if (GameManager.Instance.CurStage == 2 || GameManager.Instance.CurStage == 3 ||
+            GameManager.Instance.CurStage == 4 || GameManager.Instance.CurStage == 5)
         {
-            case 0:
-                if (curIndex == 0)
+            if (curIndex == 0)
+            {
+                CutSceneController.selectGood();
+            }
+            else if (curIndex == 1)
+            {
+                CutSceneController.selectBad();
+            }
+        }
+        else if (GameManager.Instance.CurStage == 6)
+        {
+            CutSceneController.selectGood();
+        }
+        else
+        {
+            if (curIndex == 0)
+            {
+                if (GameManager.Instance.CurStage == 7)
                 {
+                    if (gameObject.CompareTag("SecondSelect"))
+                        LuciferCutScene.selectBad(true);
+                    else
+                        LuciferCutScene.selectBad(false);
+                }
+                else
                     CutSceneController.selectBad();
-                }
-                else if (curIndex == 1)
+            }
+            else if (curIndex == 1)
+            {
+                if (GameManager.Instance.CurStage == 7)
                 {
-                    CutSceneController.selectGood();
+                    if (gameObject.CompareTag("SecondSelect"))
+                        LuciferCutScene.selectGood(true);
+                    else
+                        LuciferCutScene.selectGood(false);
                 }
-                break;
+                else
+                    CutSceneController.selectGood();
+            }
         }
     }
 

@@ -5,28 +5,23 @@ using UnityEngine;
 
 public class Test1 : MonoBehaviour
 {
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+            transform.position = new Vector3(transform.position.x + 1, transform.position.y);
+        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+            transform.position = new Vector3(transform.position.x - 1, transform.position.y);
+        else if (Input.GetKeyDown(KeyCode.UpArrow))
+            transform.position = new Vector3(transform.position.x, transform.position.y + 1);
+        else if (Input.GetKeyDown(KeyCode.DownArrow))
+            transform.position = new Vector3(transform.position.x, transform.position.y - 1);
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.transform.CompareTag("Goal"))
+        if (collision.transform.CompareTag("UpDownSpike"))
         {
-            Debug.Log("OnTriggerEnter2D");
+            //Debug.Log("Player in UpDownSpike");
         }
     }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision != null)
-        {
-            Debug.Log("OnTriggerStay2D");
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision != null)
-        {
-            Debug.Log("OnTriggerExit2D");
-        }
-    }
-
 }

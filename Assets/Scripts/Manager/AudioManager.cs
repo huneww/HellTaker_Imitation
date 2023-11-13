@@ -59,6 +59,31 @@ public class AudioManager : MonoBehaviour
     // 다이얼로그 선택 메뉴 결정 사운드
     [SerializeField]
     private AudioClip dialogSelectSound;
+    // 스파이크 히트 사운드
+    [SerializeField]
+    private AudioClip[] spikeHitSound;
+    // 파티클 사운드
+    [SerializeField]
+    private AudioClip[] succesSound;
+    // 열쇠 획득 사운드
+    [SerializeField]
+    private AudioClip getKeySound;
+    // 잠긴문 차는 사운드
+    [SerializeField]
+    private AudioClip[] doorKickSound;
+    // 문 열리는 사운드
+    [SerializeField]
+    private AudioClip doorOpenSound;
+    // 루시퍼 와인잔 돌리는 사운드
+    [SerializeField]
+    private AudioClip luciferSwirlSound;
+    // 루시퍼 인트로 사운드
+    [SerializeField]
+    private AudioClip luciferIntroSound;
+    // 루시퍼 가드 움직이는 사운드
+    [SerializeField]
+    private AudioClip luciferGuardMoveSound;
+
 
     private void Awake()
     {
@@ -131,6 +156,46 @@ public class AudioManager : MonoBehaviour
     public void DialogSelect()
     {
         AudioPlay(dialogSelectSound);
+    }
+
+    public void SpikeHit()
+    {
+        AudioPlay(spikeHitSound[Random.Range(0, spikeHitSound.Length)]);
+    }
+
+    public void SuccesSound()
+    {
+        AudioPlay(succesSound[Random.Range(0, succesSound.Length)]);
+    }
+
+    public void DoorKick()
+    {
+        AudioPlay(doorKickSound[Random.Range(0, doorKickSound.Length)]);
+    }
+
+    public void DoorOpen()
+    {
+        AudioPlay(doorOpenSound);
+    }
+
+    public void GetKey()
+    {
+        AudioPlay(getKeySound);
+    }
+
+    public void Swirl()
+    {
+        AudioPlay(luciferSwirlSound);
+    }
+
+    public void LuciferIntro()
+    {
+        AudioPlay(luciferIntroSound);
+    }
+
+    public void LuciferGuardMove()
+    {
+        AudioPlay(luciferGuardMoveSound);
     }
 
     public void MainAudioStop()

@@ -17,17 +17,18 @@ public class DialogBackGroundMove : MonoBehaviour
     }
 
     private RectTransform rectTransform;
+    private Vector3 curPos;
 
     private void Start()
     {
         rectTransform = GetComponent<RectTransform>();
+        curPos = rectTransform.localPosition;
     }
 
     public IEnumerator MoveCoroutine()
     {
         float curTime = 0;
         float percent = 0;
-        Vector3 curPos = rectTransform.localPosition;
 
         while (percent < 1.0f)
         {

@@ -12,6 +12,12 @@ TagManager:
   - Stone
   - UI
   - Goal
+  - Spike
+  - Demon
+  - LockBox
+  - Key
+  - UpDownSpike
+  - SecondSelect
   layers:
   - Default
   - TransparentFX
@@ -22,8 +28,8 @@ TagManager:
   - Wall
   - Skeleton
   - Stone
-  - 
-  - 
+  - LockBox
+  - Demon
   - 
   - 
   - 

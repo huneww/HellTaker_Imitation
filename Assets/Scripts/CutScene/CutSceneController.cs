@@ -23,13 +23,11 @@ public class CutSceneController : MonoBehaviour
     [SerializeField]
     private int curDialogTextIndex = 0;
 
-    [Space(10), Header("Pandemonica")]
+    [Space(10)]
     [SerializeField, TextArea]
-    private string[] pande_text_before;
+    private string[] text_before;
     [SerializeField, TextArea]
-    private string[] pande_text_select;
-    [SerializeField, TextArea]
-    private string[] pande_text_after;
+    private string[] text_after;
 
     public static Action selectBad;
     public static Action selectGood;
@@ -53,13 +51,7 @@ public class CutSceneController : MonoBehaviour
             movetime = movetime < move.MoveTime ? move.MoveTime : movetime;
         }
         yield return new WaitForSeconds(movetime);
-        switch (GameManager.Instance.CurStage)
-        {
-            case 1:
-                dialogText.text = pande_text_before[0];
-                break;
-
-        }
+        dialogText.text = text_before[0];
         StartCoroutine(demonImage.GetComponent<SpriteMove>().MoveCoroutine());
     }
 
@@ -69,39 +61,45 @@ public class CutSceneController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            switch (GameManager.Instance.CurStage)
+            if (GameManager.Instance.IsDialog)
             {
-                case 0:
-                    if (GameManager.Instance.IsDialog)
+                if (curDialogTextIndex < text_before.Length - 1)
+                {
+                    curDialogTextIndex++;
+                    dialogText.text = text_before[curDialogTextIndex];
+                    AudioManager.Instance.DialogComFirm();
+                }
+                else if (GameManager.Instance.CurStage == 8)
+                {
+                    GameManager.Instance.BadEnd();
+                }
+                else
+                {
+                    selectMenu.SetActive(true);
+                    GameManager.Instance.IsDialog = false;
+                    GameManager.Instance.IsSelect = true;
+                    booper.SetActive(false);
+                }
+            }
+            else if (isGood || isBad)
+            {
+                if (isGood)
+                {
+                    GameManager.Instance.GoodEnd();
+                    gameObject.SetActive(false);
+                    Debug.Log("Good End");
+                }
+                else if (isBad)
+                {
+                    // 천국으로 가는 엔딩 씬을 따로 제작
+                    if (GameManager.Instance.CurStage == 5)
                     {
-                        if (curDialogTextIndex < pande_text_before.Length - 1)
-                        {
-                            curDialogTextIndex++;
-                            dialogText.text = pande_text_before[curDialogTextIndex];
-                            AudioManager.Instance.DialogComFirm();
-                        }
-                        else
-                        {
-                            selectMenu.SetActive(true);
-                            GameManager.Instance.IsDialog = false;
-                            GameManager.Instance.IsSelect = true;
-                            booper.SetActive(false);
-                        }
+                        Debug.Log("Go to Heaven");
                     }
-                    else if (isGood || isBad)
-                    {
-                        if (isGood)
-                        {
-                            GameManager.Instance.GoodEnd();
-                            Debug.Log("Good End");
-                        }
-                        else if (isBad)
-                        {
-                            GameManager.Instance.BadEnd();
-                            Debug.Log("Bad End");
-                        }
-                    }
-                    break;
+                    else
+                        GameManager.Instance.BadEnd();
+                    Debug.Log("Bad End");
+                }
             }
         }
     }
@@ -111,7 +109,7 @@ public class CutSceneController : MonoBehaviour
         booper.SetActive(true);
         selectMenu.SetActive(false);
         isBad = true;
-        dialogText.text = pande_text_after[0];
+        dialogText.text = text_after[0];
     }
 
     private void SelectGood()
@@ -121,7 +119,7 @@ public class CutSceneController : MonoBehaviour
         selectMenu.SetActive(false);
         goodEndMenu.SetActive(true);
         isGood = true;
-        dialogText.text = pande_text_after[1];
+        dialogText.text = text_after[1];
     }
 
 }

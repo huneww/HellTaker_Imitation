@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &9139126280211892354
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5953333307165148123}
+  - component: {fileID: 7304413849678407797}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5953333307165148123
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9139126280211892354}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7304413849678407797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9139126280211892354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e287191b4c54fdc439877c8c969fb13b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveXOffset: 1
+  moveYOffset: 1
+  dust: {fileID: 4737308675055301992, guid: 565d91c3963036e41b1e409218a828c0, type: 3}
+  hit: {fileID: 2459273182233908512, guid: a4af81476f6342e46b7362d1ff654d1b, type: 3}
+  bornParticle: {fileID: 34032414634553195, guid: 61477b9a119c0ee4f981cbbf04d1d06b, type: 3}
+  blood: {fileID: 7587823728932375815, guid: 58f6c65516575534c86b472f301a07eb, type: 3}
+  lovePlosion: {fileID: 974901087925408368, guid: 71004d40c5b5d744984c4baa81132f32, type: 3}
+  unLock: {fileID: 2458070615804925751, guid: 917b69d0b9e6600468acc15d51cad7e6, type: 3}
+  uiCanvas: {fileID: 0}
+  footCountText: {fileID: 0}
+  curFootCount: 1
+  chapterText: {fileID: 0}
+  deadAnimation: {fileID: 5648363756991650121, guid: 3022f6d301fb2c34ebda26172f3e9fe4, type: 3}
+  deadBackGround: {fileID: 2425571861092741035, guid: ec4f5b4911e888b4a978c1a351d3b889, type: 3}
+  isDialog: 0
+  dialogCanvas: {fileID: 0}
+  selectMenu: {fileID: 0}
+  isSelect: 0
+  badEndScene: {fileID: 0}

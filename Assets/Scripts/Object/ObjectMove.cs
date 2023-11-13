@@ -70,12 +70,7 @@ public class ObjectMove : MonoBehaviour
             // 오브젝트가 스켈레톤이라면
             if (gameObject.CompareTag("Skeleton"))
             {
-                // 스켈레톤 죽는 사운드 재생
-                AudioManager.Instance.EnemyDie();
-                // 스켈레톤 뼈 파티클 생성
-                GameManager.Instance.SpawnBornParticle(transform.position);
-                // 스켈레톤 오브젝트 제거
-                Destroy(this.gameObject);
+                Dead();
             }
         }
         else
@@ -83,6 +78,16 @@ public class ObjectMove : MonoBehaviour
             // 오브젝트 목표 위치로 이동
             StartCoroutine(MoveCoroutine());
         }
+    }
+
+    private void Dead()
+    {
+        // 스켈레톤 죽는 사운드 재생
+        AudioManager.Instance.EnemyDie();
+        // 스켈레톤 뼈 파티클 생성
+        GameManager.Instance.SpawnBornParticle(transform.position);
+        // 스켈레톤 오브젝트 제거
+        Destroy(this.gameObject);
     }
 
     private IEnumerator MoveCoroutine()
@@ -115,11 +120,19 @@ public class ObjectMove : MonoBehaviour
     /// <returns>있으면 참, 없으면 거짓</returns>
     private bool CheckTargetPosObj()
     {
-        Vector3 checkPos = new Vector3(targetPos.x, targetPos.y + 0.25f, targetPos.z);
+        Vector3 checkPos = targetPos;
         Collider2D check = Physics2D.OverlapCircle(checkPos, 0.3f, checkLayer);
         if (check != null)
             return true;
         return false;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.transform.CompareTag("Spike") || collision.transform.CompareTag("UpDownSpike"))
+        {
+            Dead();
+        }
     }
 
     /// <summary>
@@ -130,10 +143,10 @@ public class ObjectMove : MonoBehaviour
         if (GameManager.Instance == null)
             return;
 
-        Gizmos.DrawWireSphere(new Vector3(transform.position.x + GameManager.Instance.MoveXOffset, transform.position.y + 0.25f), 0.3f);
-        Gizmos.DrawWireSphere(new Vector3(transform.position.x - GameManager.Instance.MoveXOffset, transform.position.y + 0.25f), 0.3f);
-        Gizmos.DrawWireSphere(new Vector3(transform.position.x, transform.position.y + GameManager.Instance.MoveYOffset + 0.25f), 0.3f);
-        Gizmos.DrawWireSphere(new Vector3(transform.position.x, transform.position.y - GameManager.Instance.MoveYOffset + 0.25f), 0.3f);
+        Gizmos.DrawWireSphere(new Vector3(transform.position.x + GameManager.Instance.MoveXOffset, transform.position.y), 0.3f);
+        Gizmos.DrawWireSphere(new Vector3(transform.position.x - GameManager.Instance.MoveXOffset, transform.position.y), 0.3f);
+        Gizmos.DrawWireSphere(new Vector3(transform.position.x, transform.position.y + GameManager.Instance.MoveYOffset), 0.3f);
+        Gizmos.DrawWireSphere(new Vector3(transform.position.x, transform.position.y - GameManager.Instance.MoveYOffset), 0.3f);
     }
 
 }
