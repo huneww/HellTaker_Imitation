@@ -44,6 +44,7 @@ public class PlayerMove : MonoBehaviour
 
     private void Update()
     {
+        // 움직일수 있는 상태가 아니라면 메서드 종료
         if (GameManager.Instance.IsDialog || GameManager.Instance.IsSelect || GameManager.Instance.IsDead)
             return;
 

@@ -34,6 +34,7 @@ public class MoveBeel : MonoBehaviour
 
     private IEnumerator MoveCoroutine()
     {
+        // 벨 위치 이동
         float curTime = 0;
         float percent = 0;
 

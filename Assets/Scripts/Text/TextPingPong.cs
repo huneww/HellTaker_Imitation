@@ -5,12 +5,15 @@ using UnityEngine.UI;
 
 public class TextPingPong : MonoBehaviour
 {
+    // x,y축 동일한 시간동안 하는지 확인 변수
     public bool sameTime;
+    // x,y축 이동 시간
     public float xTime = 1f;
     public float yTime = 1f;
+    // x,y축 애니메이션 커브
     public AnimationCurve xCurve;
     public AnimationCurve yCurve;
-
+    // 텍스트 렉트트랜스폼
     private RectTransform tr;
 
     private void OnEnable()

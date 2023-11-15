@@ -93,14 +93,25 @@ public class AudioManager : MonoBehaviour
             Destroy(this.gameObject);
     }
 
+    /// <summary>
+    /// 오디오 인덱스 변경
+    /// </summary>
     private void IndexChange()
     {
+        // 오디오 인덱스 변경
         audioIndex = (audioIndex + 1) % subAudios.Length;
     }
 
+    /// <summary>
+    /// 오디오 클립 재생
+    /// </summary>
+    /// <param name="clip">재생할 오디오 클립</param>
     private void AudioPlay(AudioClip clip)
     {
+        // 클립 재생
         subAudios[audioIndex].PlayOneShot(clip);
+        // 오디오 인덱스 변경
+        IndexChange();
     }
 
     public void PlayerMove()

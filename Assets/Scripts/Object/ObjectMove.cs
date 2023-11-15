@@ -98,6 +98,7 @@ public class ObjectMove : MonoBehaviour
         // 스톤은 이동하지 안더라도 차는 소리는 재생됨
         else if (gameObject.CompareTag("Stone")) AudioManager.Instance.StoneMove();
 
+        // 오브젝트 이동
         float curTime = 0;
         float percent = 0;
         Vector3 curPos = transform.position;
@@ -129,9 +130,14 @@ public class ObjectMove : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.transform.CompareTag("Spike") || collision.transform.CompareTag("UpDownSpike"))
+        // 오브젝트가 스켈레톤이라면
+        if (gameObject.CompareTag("Skeleton"))
         {
-            Dead();
+            // 함정에 닿였다면 Dead메서드 실행
+            if (collision.transform.CompareTag("Spike") || collision.transform.CompareTag("UpDownSpike"))
+            {
+                Dead();
+            }
         }
     }
 

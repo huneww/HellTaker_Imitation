@@ -242,6 +242,7 @@ public class MenuManager : MonoBehaviour
     public void StartStage(int stage)
     {
         Debug.Log("Start : " + stage + "stage");
+        // 선택 챕터에 맞게 챕터 로드
         switch (stage)
         {
             case 0:
@@ -253,24 +254,31 @@ public class MenuManager : MonoBehaviour
                 SceneChangeDoor.Instance.PlayCloseAnimation("ChapterOne");
                 break;
             case 2:
+                SceneChangeDoor.Instance.PlayCloseAnimation("ChapterTwo");
                 break;
             case 3:
+                SceneChangeDoor.Instance.PlayCloseAnimation("ChapterThree");
                 break;
             case 4:
+                SceneChangeDoor.Instance.PlayCloseAnimation("ChapterFour");
                 break;
             case 5:
+                SceneChangeDoor.Instance.PlayCloseAnimation("ChapterFive");
                 break;
             case 6:
+                SceneChangeDoor.Instance.PlayCloseAnimation("ChapterSix");
                 break;
             case 7:
+                SceneChangeDoor.Instance.PlayCloseAnimation("ChapterSeven");
                 break;
             case 8:
+                SceneChangeDoor.Instance.PlayCloseAnimation("ChapterEight");
                 break;
             case 9:
+                SceneChangeDoor.Instance.PlayCloseAnimation("ChapterNine");
                 break;
             case 10:
-                break;
-            case 11:
+                SceneChangeDoor.Instance.PlayCloseAnimation("ChapterTen");
                 break;
         }
     }

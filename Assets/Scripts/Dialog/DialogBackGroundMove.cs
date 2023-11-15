@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class DialogBackGroundMove : MonoBehaviour
 {
+    // 이동 위치
     [SerializeField]
     private Vector3 targetPos;
+    // 이동 시간
     [SerializeField]
     private float moveTime;
     public float MoveTime
@@ -27,6 +29,7 @@ public class DialogBackGroundMove : MonoBehaviour
 
     public IEnumerator MoveCoroutine()
     {
+        // 이동 위치로 이동
         float curTime = 0;
         float percent = 0;
 
