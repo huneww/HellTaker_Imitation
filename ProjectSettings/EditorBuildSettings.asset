@@ -35,4 +35,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ChapterNine.unity
     guid: 6268c62ba57aa094584ce1715afe3a09
+  - enabled: 1
+    path: Assets/Scenes/ChapterTen.unity
+    guid: edd730449a90b324ba8c7e50485bccb2
+  - enabled: 1
+    path: Assets/Scenes/Boss/BossStage_1.unity
+    guid: 17192f90a9e7272448c1f2fe4d500582
   m_configObjects: {}
