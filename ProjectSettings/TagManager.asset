@@ -18,6 +18,11 @@ TagManager:
   - Key
   - UpDownSpike
   - SecondSelect
+  - SpikeColliderUp
+  - SpikeColliderDown
+  - DeathZone
+  - HitChain
+  - SuccessUI
   layers:
   - Default
   - TransparentFX
@@ -30,7 +35,7 @@ TagManager:
   - Stone
   - LockBox
   - Demon
-  - 
+  - Chain
   - 
   - 
   - 

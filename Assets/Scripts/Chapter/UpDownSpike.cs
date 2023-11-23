@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class UpDownSpike : MonoBehaviour
 {
     // 현재 올라와있는지 확인 변수
@@ -25,6 +26,7 @@ public class UpDownSpike : MonoBehaviour
 
     public void Update()
     {
+
         // 활살표 입력시
         if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.LeftArrow)||
             Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow))
@@ -59,8 +61,16 @@ public class UpDownSpike : MonoBehaviour
             // 현재 올라와있는지 확인
             if (isUp)
             {
-                // 플레이어 출혈 이펙트 생성
-                GameManager.Instance.SpawnBlood(transform.position);
+                if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name.Contains("Boss"))
+                {
+                    Debug.Log("Blood");
+                }
+                else
+                {
+                    // 플레이어 출혈 이펙트 생성
+                    GameManager.Instance.SpawnBlood(transform.position);
+                }
+                
             }
         }
     }

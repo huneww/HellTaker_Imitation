@@ -514,12 +514,6 @@ public class GameManager : MonoBehaviour
                 case "ChapterNine":
                     SceneChangeDoor.Instance.PlayCloseAnimation("ChapterTen");
                     break;
-                case "ChapterTen":
-                    SceneChangeDoor.Instance.PlayCloseAnimation("ChapterEX");
-                    break;
-                case "ChapterEX":
-                    SceneChangeDoor.Instance.PlayCloseAnimation("MainMenu");
-                    break;
             }
         }
 

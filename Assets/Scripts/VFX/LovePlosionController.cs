@@ -48,7 +48,12 @@ public class LovePlosionController : MonoBehaviour
         // 일정시간 대기
         yield return new WaitForSeconds(0.5f);
         // 게임 매니저의 스테이지 변경 메서드 실행
-        StartCoroutine(GameManager.Instance.StageChange(false));
+        if (GameManager.Instance != null)
+            StartCoroutine(GameManager.Instance.StageChange(false));
+        else if (JGBossGameManager.Instance != null)
+        {
+            JGBossGameManager.Instance.NextStage();
+        }
         // 오브젝트 삭제
         Destroy(this.gameObject);
     }

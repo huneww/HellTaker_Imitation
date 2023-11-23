@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: BindChain_Back
+  m_Controller: {fileID: 9100000, guid: 9aae6ac9d741ed545baefca2761e11d0, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 565a41a395a8b3041845264d48592021, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 9f6a571d3546f8a4392f81857a593d90, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: d455ad0ed0248524ead7fec0fa980a84, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 73ecdb4c54a5e114ab421ee7302f8639, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: d0a76d2bac884514a9b137b5f8fbe5b0, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 96c3f36703f6ec74dbc83703a2162866, type: 2}
